@@ -1,0 +1,156 @@
+[gd_scene load_steps=16 format=3 uid="uid://fr71oouajk7p"]
+
+[ext_resource type="Texture2D" uid="uid://nr1u0jg58l2j" path="res://Sprites/Background.png" id="1_4hbai"]
+[ext_resource type="PackedScene" uid="uid://cb8nng3wheso2" path="res://Game/tree_group.tscn" id="2_sqfdg"]
+[ext_resource type="PackedScene" uid="uid://hjd8naomwmrn" path="res://Game/bus.tscn" id="3_lu01m"]
+[ext_resource type="Shader" path="res://Sprites/scrolling_sprite.gdshader" id="4_jaur8"]
+[ext_resource type="FontFile" uid="uid://bdtrlx1ws7xpa" path="res://Micro5-Regular.ttf" id="4_o28bs"]
+[ext_resource type="Texture2D" uid="uid://8tt7lgafwiyv" path="res://Sprites/Treeline.png" id="4_tvecu"]
+[ext_resource type="Texture2D" uid="uid://b0wy43cpaimhc" path="res://Sprites/Clouds.png" id="5_0rw15"]
+[ext_resource type="Script" path="res://score_script.gd" id="5_ur3ri"]
+[ext_resource type="Script" path="res://scrolling_sprite_script.gd" id="6_6k02s"]
+[ext_resource type="Script" path="res://toggle_visible.gd" id="6_p0w0s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_31n0f"]
+shader = ExtResource("4_jaur8")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1wead"]
+shader = ExtResource("4_jaur8")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_axv3c"]
+shader = ExtResource("4_jaur8")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c7yl1"]
+font = ExtResource("4_o28bs")
+font_size = 140
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8p4c"]
+size = Vector2(1080, 1920)
+
+[node name="Scene" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-4, -56)
+scale = Vector2(21, 21)
+texture = ExtResource("1_4hbai")
+
+[node name="Clouds" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_31n0f")
+position = Vector2(-640, -1230)
+scale = Vector2(10, 10)
+texture = ExtResource("5_0rw15")
+centered = false
+script = ExtResource("6_6k02s")
+relative_speed = 0.04
+
+[node name="Treeline2" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_1wead")
+position = Vector2(-586, 442)
+scale = Vector2(9, 9)
+texture = ExtResource("4_tvecu")
+centered = false
+script = ExtResource("6_6k02s")
+relative_speed = 0.08
+
+[node name="TreeGroup" parent="." instance=ExtResource("2_sqfdg")]
+position = Vector2(400, 0)
+randomize_on_start = false
+
+[node name="TreeGroup2" parent="." instance=ExtResource("2_sqfdg")]
+position = Vector2(1100, 0)
+
+[node name="TreeGroup3" parent="." instance=ExtResource("2_sqfdg")]
+position = Vector2(1800, 0)
+
+[node name="TreeGroup4" parent="." instance=ExtResource("2_sqfdg")]
+position = Vector2(2500, 0)
+
+[node name="Bus" parent="." instance=ExtResource("3_lu01m")]
+position = Vector2(-208, 0)
+
+[node name="Treeline" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_axv3c")
+position = Vector2(-640, 600)
+scale = Vector2(10, 10)
+texture = ExtResource("4_tvecu")
+centered = false
+script = ExtResource("6_6k02s")
+relative_speed = 0.12
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+
+[node name="Score" type="Label" parent="CanvasGroup"]
+texture_filter = 1
+texture_repeat = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -826.0
+offset_right = 131.0
+offset_bottom = -697.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "%s"
+label_settings = SubResource("LabelSettings_c7yl1")
+horizontal_alignment = 1
+script = ExtResource("5_ur3ri")
+metadata/_edit_use_anchors_ = true
+
+[node name="StartMessage" type="Label" parent="CanvasGroup"]
+texture_filter = 1
+texture_repeat = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = 174.0
+offset_right = 223.0
+offset_bottom = 459.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "TRYCK FÖR
+ATT BÖRJA"
+label_settings = SubResource("LabelSettings_c7yl1")
+horizontal_alignment = 1
+script = ExtResource("6_p0w0s")
+invert = true
+metadata/_edit_use_anchors_ = true
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="CanvasGroup"]
+shape = SubResource("RectangleShape2D_d8p4c")
+action = "Jump"
+
+[connection signal="failed_changed" from="Bus" to="CanvasGroup/Score" method="set_label_hidden"]
+[connection signal="playing_changed" from="Bus" to="CanvasGroup/StartMessage" method="set_node_visible"]
+[connection signal="reset" from="Bus" to="TreeGroup" method="reset"]
+[connection signal="reset" from="Bus" to="TreeGroup2" method="reset"]
+[connection signal="reset" from="Bus" to="TreeGroup3" method="reset"]
+[connection signal="reset" from="Bus" to="TreeGroup4" method="reset"]
+[connection signal="score_changed" from="Bus" to="CanvasGroup/Score" method="set_score"]

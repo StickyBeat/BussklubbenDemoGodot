@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>$GODOT_PROJECT_NAME</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+
+      #ui {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000cc;
+      }
+
+      .loader {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .spinner {
+        width: 100px;
+        margin-top: 20px;
+        animation: loading 1s linear infinite;
+      }
+
+      .loader-logo {
+        width: 50%;
+      }
+
+      .loader-text {
+        font-family: DosisRegular;
+        color: #ffffff;
+      }
+
+      @keyframes loading {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    $GODOT_HEAD_INCLUDE
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="ui"></div>
+    <div class="loader" id="loader">
+      <p class="loader-text">Startar</p>
+      <img class="loader-logo" src="/images/logo.png" />
+      <img class="spinner" src="/images/spinner.svg" />
+    </div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://klubbhuset-clubhouse.azurewebsites.net/js/ClubHouseGame.js"></script>
+    <script src="$GODOT_URL"></script>
+    <script>
+      var engine = new Engine($GODOT_CONFIG);
+      engine.startGame();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://hjd8naomwmrn"]
+
+[ext_resource type="Texture2D" uid="uid://chs38fcpqolr8" path="res://Sprites/Bus.png" id="1_flwye"]
+[ext_resource type="Script" path="res://Game/bus_script.gd" id="1_gmn4u"]
+[ext_resource type="Texture2D" uid="uid://cxqd3tt6j0fof" path="res://Sprites/Smoke.png" id="2_td3hh"]
+
+[sub_resource type="Curve" id="Curve_md45u"]
+_data = [Vector2(0, 0.344083), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_s5owu"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Bus" type="RigidBody2D"]
+process_mode = 3
+gravity_scale = 0.0
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 2
+script = ExtResource("1_gmn4u")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(-125, 25)
+emitting = false
+amount = 10
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.1
+local_coords = true
+texture = ExtResource("2_td3hh")
+direction = Vector2(-1, 0)
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 300.0
+angle_max = 360.0
+scale_amount_min = 1.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_md45u")
+color_ramp = SubResource("Gradient_s5owu")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_flwye")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(4, 4)
+polygon = PackedVector2Array(-32, -15, -32, 9.8, 18.9, 12, 32, 12, 32, -15)
